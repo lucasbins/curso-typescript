@@ -34,3 +34,24 @@ console.log(typeof a)
 
 a = true
 console.log(a)
+
+//4 - inferene e annotation
+
+let ann: string = "Teste"
+
+let inf = "Teste"
+
+//ann = 1
+//inf = 1
+
+//5 - desafio 2 -
+
+let n1: number = 22
+
+let numString: string = n1.toString()
+
+let concatString = "Meu numero é: " + numString
+
+console.log(concatString)
+
+
