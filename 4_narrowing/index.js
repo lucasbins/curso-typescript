@@ -1,117 +1,80 @@
-// 1 - arrays
-var numbers = [1, 2, 3];
-numbers.push(5);
-console.log(numbers[2]);
-// numbers = "teste" - um array de number nao pode add string
-var nomes = ["Matheus", "Lucas"];
-// nomes.push(4) - um array de string nao pode add number
-// 2 - outra sintaxe de array
-var nums = [100, 200];
-nums.push(300);
-console.log(nums);
-//nums.push("teste")
-console.log(nums[0]);
-// 3 - any
-var arr1 = [1, "teste", true, [], { nome: "lucas" }];
-console.log(arr1);
-// 4 - parametro tipados
-function soma(a, b) {
-    console.log(a + b);
-}
-soma(4, 5);
-//soma("teste", 1)
-// 5 - retorno de funcao
-function greeting(name) {
-    return "Ol\u00E1 ".concat(name);
-}
-console.log(greeting("Lucas"));
-// 6 - funcaoes anonimas
-setTimeout(function () {
-    var sallary = 1000;
-    //console.log(parseFloat(sallary))
-    //console.log(sallary)
-}, 2000);
-// 7 - tipos de objeto
-function passCoordinates(coord) {
-    console.log("X coordinates: " + coord.x);
-    console.log("y coordinates: " + coord.y);
-}
-var objCoord = { x: 329, y: 84.2 };
-passCoordinates(objCoord);
-// 8 - props opcionais
-function showNumbers(a, b, c) {
-    console.log("A: " + a);
-    console.log("B: " + b);
-    if (c) {
-        console.log("C: " + c);
+"use strict";
+//1 - type guard
+function sum(a, b) {
+    if (typeof a === "string" && typeof b === "string") {
+        console.log(parseFloat(a) + parseFloat(b));
+    }
+    else if (typeof a === "number" && typeof b === "number") {
+        console.log(a + b);
+    }
+    else {
+        console.log("Impossível realizar a soma!");
     }
 }
-showNumbers(1, 2, 3);
-showNumbers(1, 2);
-//showNumbers(1)
-// 9 - validacao props opcionais
-function advanceGreenting(firstName, lastName) {
-    if (lastName !== undefined) {
-        return "ol\u00E1, ".concat(firstName, " ").concat(lastName, ", tudo bem?");
+sum("1", "59");
+sum(12, 432.2);
+sum("4", 6);
+//2 - checando se valor existe
+function operations(arr, operation) {
+    switch (operation) { //narrowing
+        case "sum":
+            const sum = arr.reduce((i, total) => i + total);
+            console.log(sum);
+            break;
+        case "multiply":
+            const multiply = arr.reduce((i, total) => i * total);
+            console.log(multiply);
+            break;
+        default:
+            console.log("Por favor, defina uma operação");
     }
-    return "Ol\u00E1, ".concat(firstName, ", tudo bem?");
 }
-console.log(advanceGreenting("Lucas", "Braga"));
-console.log(advanceGreenting("Deise"));
-// 10 - Union types
-function showBalance(balance) {
-    console.log("O saldo da conta \u00E9 R$ ".concat(balance));
-}
-showBalance(100);
-showBalance("500");
-var arr2 = [1, "teste", true];
-console.log(arr2);
-// 11 - avancando union types
-function showUserRole(role) {
-    if (typeof role === "boolean") {
-        return "Usuario não aprovado!";
+operations([1, 2, 3]);
+operations([1, 2, 3], "sum");
+operations([1, 2, 5], "multiply");
+//3 - instanceof
+class User {
+    constructor(name) {
+        this.name = name;
     }
-    return "A fun\u00E7\u00E3o do usu\u00E1rio \u00E9: ".concat(role);
 }
-console.log(showUserRole(false));
-console.log(showUserRole("Admin"));
-function showId(id) {
-    console.log("Meu id \u00E9: ".concat(id));
+class SuperUser extends User {
+    constructor(name) {
+        super(name);
+    }
 }
-showId(1);
-showId("200");
-function showCoords(obj) {
-    console.log("X: ".concat(obj.x, " Y: ").concat(obj.y, " Z: ").concat(obj.z));
+const lucas = new User("Lucas");
+const deise = new SuperUser("Deise");
+console.log(lucas);
+console.log(deise);
+function userGreeting(user) {
+    if (user instanceof SuperUser) {
+        console.log(`Olá ${user.name}, deseja ver os dados do sistema?`);
+    }
+    else if (user instanceof User) {
+        console.log(`Olá ${user.name}`);
+    }
 }
-var coordObj = {
-    x: 10,
-    y: 15,
-    z: 20
-};
-showCoords(coordObj);
-var somePerson = { name: "Lucas", age: 30 };
-console.log(somePerson);
-//type personType = { age: number } type como se fosse const
-//15 - literal types
-var test;
-test = "testando";
-console.log(test);
-function showDirection(direction) {
-    console.log("A dire\u00E7\u00E3o \u00E9: ".concat(direction));
+userGreeting(lucas);
+userGreeting(deise);
+// 4 - operador in
+class Dog {
+    constructor(name, breed) {
+        this.name = name;
+        if (breed) {
+            this.breed = breed;
+        }
+    }
 }
-showDirection("left");
-//showDirection("Top")
-// 16 - non-null assertion operations
-var p = document.getElementById("some-p");
-console.log(p.innerText);
-// 17 - bigint
-var n;
-//n = 1
-n = 1000n;
-console.log(n);
-console.log(typeof n);
-// 18 - symbol
-var symbolA = Symbol("a");
-var symbolB = Symbol("b");
-console.log(symbolA == symbolB);
-console.log(symbolA === symbolB);
+const bombom = new Dog("Bombom");
+const bob = new Dog("Bob", "Pastor Alemão");
+function showDogDetails(dog) {
+    if ('breed' in dog) {
+        console.log(`O cachorro ${dog.name} é de raça ${dog.breed}`);
+    }
+    else {
+        console.log(`O cachorro ${dog.name} é um SRD`);
+    }
+}
+showDogDetails(bombom);
+showDogDetails(bob);
