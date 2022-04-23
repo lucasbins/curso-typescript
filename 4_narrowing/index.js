@@ -78,3 +78,47 @@ function showDogDetails(dog) {
 }
 showDogDetails(bombom);
 showDogDetails(bob);
+// 5 - desafio
+function review(stars, review) {
+    if (review) {
+        switch (stars) {
+            case 1:
+                console.log(`${stars} estrela - muito ruim`);
+                break;
+            case 2:
+                console.log(`${stars} estrela - ruim`);
+                break;
+            case 3:
+                console.log(`${stars} estrela - bom`);
+                break;
+            case 4:
+                console.log(`${stars} estrela - muito bom`);
+                break;
+            case 5:
+                console.log(`${stars} estrela - Execelente`);
+                break;
+            default:
+                break;
+        }
+    }
+    else {
+        console.log("Não vez o review");
+    }
+}
+review(1, true);
+review(2, true);
+review(3, true);
+review(4, true);
+review(5, true);
+review(8, true);
+review(1, false);
+function showUserReview(review) {
+    if (!review) {
+        console.log("Usuário não avaliou o produto");
+        return;
+    }
+    console.log(`A nota que voce deu foi ${review}, obrigado!`);
+}
+showUserReview(false);
+showUserReview(2);
+showUserReview(5);
